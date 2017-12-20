@@ -632,7 +632,7 @@ var kw = {
 
     //判断移动端au
     //
-    getAU: function ismobile(test) {
+    getUA: function ismobile(test) {
         var u = navigator.userAgent,
             app = navigator.appVersion;
         if (/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|ZTE/.test(navigator.userAgent))) {
@@ -650,8 +650,53 @@ var kw = {
         } else {
             return '1';
         }
-    }
+    },
 
+
+
+    //获取url中查询参数值
+    getQueryString: function (name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            return decodeURI(r[2]);
+        }
+        return null;
+    },
+
+
+     // 身份证号码为15位或者18位，15位时全为数字，18位前17位为数字，最后一位是校验位，可能为数字或字符X
+     isCardNo : function(card) { 
+        var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/; 
+        if(reg.test(card) === false) { 
+            return false; 
+        } else{
+            return true;
+        }
+    },
+    
+    //手机号校验 
+     
+    isMobile : function(sMobile) { 
+        console.log(sMobile)
+        var reg = /^1[3|4|5|8][0-9]\d{4,8}$/; 
+        if(reg.test(sMobile) === false) { 
+            return false; 
+        } else{
+            return true;
+        }
+    },
+
+    //邮箱校验
+
+    isEmail : function(email) { 
+        var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/; 
+        if(reg.test(email) === false) { 
+            return false;
+        } else{
+            return true;
+        }
+    }
 
 
 }
